@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Buscar CEP</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div class="header">
+    <img src="./img/6395381.png" alt="">
+    <h2>Procure o seu endereço aqui!</h2>
+  <input type="text" id="cep" placeholder="Digite o CEP">
+  <button onclick="buscarCep()">Buscar</button>
+</div>
+  <div id="resultado"></div>
+
+  <script>
+    function buscarCep() {
+      const cep = document.querySelector("#cep").value
+
+      // URL do webservice do ViaCEP para consulta de CEP
+      const url = `https://viacep.com.br/ws/${cep}/json/`
+
+      // Realiza a requisição HTTP
+      fetch(url)
+        .then((response) => {
+          // Verifica se a resposta foi bem-sucedida
+          if (response.ok) {
+            // Obtém os dados da resposta
+            return response.json();
+          } else {
+            throw new Error("Erro ao buscar CEP");
+          }
+        })
+        .then((dados) => {
+          // Exibe os dados do CEP
+          document.querySelector("#resultado").innerHTML = `
+            CEP: ${dados.cep}
+            Rua: ${dados.logradouro}
+            Bairro: ${dados.bairro}
+            Cidade: ${dados.localidade}
+            Estado: ${dados.uf}
+          `;
+        })
+        .catch((erro) => {
+          // Exibe o erro
+          document.querySelector("#resultado").innerHTML = `
+            Ocorreu um erro ao buscar o CEP: ${erro.message}
+          `;
+        });
+    }
+  </script>
+</body>
+</html>

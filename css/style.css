@@ -1,0 +1,14 @@
+img{
+    height: 75px;
+    width: 75px;
+}
+h2{
+    color: #2f8ab8;
+}
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 300px;
+    flex-direction: column;
+}
